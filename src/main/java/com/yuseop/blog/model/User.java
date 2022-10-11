@@ -35,7 +35,7 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;	//시퀀스, auto_increment
 	
-	@Column(nullable=false, length=30)	//null이 될 수 없고, 최대 길이 30
+	@Column(nullable=false, length=30, unique=true)	//null이 될 수 없고, 최대 길이 30
 	private String username;	//아이디
 	
 	@Column(nullable=false, length=100)	//비번 -> 해쉬 => 비밀번호 암호화 하여 DB에 저장
