@@ -6,9 +6,6 @@ let index = {
 		$("#btn-save").on("click", ()=>{
 			this.save();
 		});	//클릭이 되었을 때 실행할 함수
-		$("#btn-login").on("click", ()=>{
-			this.login();
-		});	//클릭이 되었을 때 실행할 함수
 	},
 	save: function() {
 		//alert('user의 save함수 호출됨');
@@ -28,7 +25,7 @@ let index = {
 		$.ajax({
 			//회원가입 수행 요청
 			type: "POST",
-			url: "/blog/api/user",
+			url: "/auth/signupProc",
 			data: JSON.stringify(data),	//http의 body데이터 -> MIME 타입 필요
 			contentType: "application/json; charset=utf-8",	//body데이터가 어떤 타입인지(MIME)
 			dataType: "json"
@@ -38,34 +35,12 @@ let index = {
 			//회원가입 수행 요청에 대한 응답 -> 정상 인 경우
 			alert("회원가입이 완료되었습니다.");
 			console.log(response);
-			location.href = "/blog";
+			location.href = "/";
 		}).fail(function(error){
 			//회원가입 수행 요청에 대한 응답 -> 실패 인 경우
 			alert(JSON.stringify(error));
 		});
 	},
-	login: function() {
-		//alert('user의 save함수 호출됨');
-		let data = {
-			username: $("#username").val(),
-			password: $("#password").val(),
-		};
-		$.ajax({
-			type: "POST",
-			url: "/blog/api/user/login",
-			data: JSON.stringify(data),	//http의 body데이터 -> MIME 타입 필요
-			contentType: "application/json; charset=utf-8",	//body데이터가 어떤 타입인지(MIME)
-			dataType: "json"
-		}).done(function(response){
-			//로그인 수행 요청에 대한 응답 -> 정상 인 경우
-			alert("로그인이 완료되었습니다.");
-			console.log(response);
-			location.href = "/blog";
-		}).fail(function(error){
-			//로그인 수행 요청에 대한 응답 -> 실패 인 경우
-			alert(JSON.stringify(error));
-		});
-	}
 }
 
 index.init();
