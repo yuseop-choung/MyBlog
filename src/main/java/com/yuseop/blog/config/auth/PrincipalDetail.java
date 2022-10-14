@@ -8,8 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.yuseop.blog.model.User;
 
+import lombok.Data;
+import lombok.Getter;
+
 //Spring security가 로그인 요청 가로채서 로그인 진행 완료 후, UserDetails 타입의 오브젝트를
 //Spring security의 고유의 세션저장소에 저장 -> 그때 저장되는 것이 PrincipalDetail
+@Getter
 public class PrincipalDetail implements UserDetails{
 	private User user;	//컴포지션 (객체를 품고 있는 것) <-> extends해서 User를 들고오는 것은 상속
 
