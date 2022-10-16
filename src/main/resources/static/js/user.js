@@ -6,6 +6,9 @@ let index = {
 		$("#btn-save").on("click", ()=>{
 			this.save();
 		});	//클릭이 되었을 때 실행할 함수
+		$("#btn-update").on("click", ()=>{
+			this.update();
+		});
 	},
 	save: function() {
 		//alert('user의 save함수 호출됨');
@@ -38,6 +41,27 @@ let index = {
 			location.href = "/";
 		}).fail(function(error){
 			//회원가입 수행 요청에 대한 응답 -> 실패 인 경우
+			alert(JSON.stringify(error));
+		});
+	},
+	update: function() {
+		let data = {
+			id: $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val(),
+		};
+		$.ajax({
+			type: "PUT",
+			url: "/user",
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		}).done(function(response){
+			alert("회원수정이 완료되었습니다.");
+			console.log(response);
+			location.href = "/";
+		}).fail(function(error){
 			alert(JSON.stringify(error));
 		});
 	},
