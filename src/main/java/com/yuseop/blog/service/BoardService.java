@@ -10,19 +10,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yuseop.blog.dto.ReplySaveRequestDto;
 import com.yuseop.blog.model.Board;
+import com.yuseop.blog.model.Reply;
 import com.yuseop.blog.model.RoleType;
 import com.yuseop.blog.model.User;
 import com.yuseop.blog.repository.BoardRepository;
+import com.yuseop.blog.repository.ReplyRepository;
 import com.yuseop.blog.repository.UserRepository;
 
 //스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌.
 //(=IoC를 해준다 = 메모리에 대신 띄워준다.)
 @Service
 public class BoardService {
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	@Transactional
 	public void 글쓰기(Board board, User user) {
@@ -59,5 +67,12 @@ public class BoardService {
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
 		//해당 함수로 종료 시(=Service 종료 시), 트랜잭션 종료. 이때 더티체킹 -> 자동 업데이트 = DB Flush
+	}
+	
+	@Transactional
+	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {		
+		replyRepository.mSave(replySaveRequestDto.getUserId(), 
+				replySaveRequestDto.getBoardId(),
+				replySaveRequestDto.getContent());
 	}
 }

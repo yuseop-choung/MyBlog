@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yuseop.blog.config.auth.PrincipalDetail;
+import com.yuseop.blog.dto.ReplySaveRequestDto;
 import com.yuseop.blog.dto.ResponseDto;
 import com.yuseop.blog.model.Board;
+import com.yuseop.blog.model.Reply;
 import com.yuseop.blog.service.BoardService;
 
 @RestController
@@ -36,6 +38,16 @@ public class BoardApiController {
 	@PutMapping("/api/board/{id}")
 	public ResponseDto<Integer> edit(@PathVariable int id, @RequestBody Board board) {
 		boardService.글수정하기(id, board);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	
+	//데이터 받을 때 컨트롤러에서 dto를 만들어서 받는 것이 좋다
+	//dto 사용하지 않는 이유는!!
+	@PostMapping("/api/board/{boardId}/reply")
+	public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto) {
+		boardService.댓글쓰기(replySaveRequestDto);
+		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 }

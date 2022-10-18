@@ -49,6 +49,8 @@ public class User {
 	private RoleType role;	//Enum 쓰는 것이 좋다 -> 데이터에 Domain을 만들어 줄 수 있음
 	//ADMIN, USER
 	
+	private String oauth;
+	
 	@CreationTimestamp	//시간 자동 입력
 	private Timestamp createDate;	//가입 시간
 	
