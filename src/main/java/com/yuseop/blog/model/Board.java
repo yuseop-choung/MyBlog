@@ -3,6 +3,7 @@ package com.yuseop.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,7 +52,10 @@ public class Board {
 	
 	//mappedBy: 연관관계의 주인이 아니다. FK가 아니기에 DB에 컬럼 생성 x. join문을 통해 값 얻기 위함.
 	//mappedBy='해당 객체 내의 필드 이름'
-	@OneToMany(mappedBy="board", fetch=FetchType.EAGER)
+	//cascade.ALL: 모든 옵션 기능 포함
+	//cascade.PERSIST: board 객체에 댓글들을 담아서 저장 -> 실제 DB에 반영
+	//cascade.REMOVE: board를 지울 때 댓글들을 한꺼번에 날리는 것
+	@OneToMany(mappedBy="board", fetch=FetchType.EAGER, cascade=CascadeType.REMOVE)
 	@JsonIgnoreProperties({"board"})
 	@OrderBy("id desc")
 	private List<Reply> replys;

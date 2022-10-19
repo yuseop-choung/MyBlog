@@ -3,10 +3,10 @@ let index = {
 		//()=>{}사용 이유: this를 바인딩하기 위해서
 		//()=>{}에서의 this: index 오브젝트
 		//function(){}에서의 this: 윈도우 오브젝트
-		$("#btn-save").on("click", ()=>{
+		$("#btn-save").on("click", () => {
 			this.save();
 		});	//클릭이 되었을 때 실행할 함수
-		$("#btn-update").on("click", ()=>{
+		$("#btn-update").on("click", () => {
 			this.update();
 		});
 	},
@@ -17,9 +17,9 @@ let index = {
 			password: $("#password").val(),
 			email: $("#email").val(),
 		};
-		
+
 		//console.log(data)
-		
+
 		//ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청
 		//ajax 호출 시 default가 비동기 호출
 		//따라서 아래 코드가 있으면 ajax 내 코드와 아래 코드들과 병행 수행
@@ -34,12 +34,16 @@ let index = {
 			dataType: "json"
 			//요청에 대한 응답이 왔을 때, 응답의 타입 -> 기본적으로 문자열
 			//생긴게 json이라면 => javascript 오브젝트로 변환
-		}).done(function(response){
+		}).done(function(response) {
 			//회원가입 수행 요청에 대한 응답 -> 정상 인 경우
-			alert("회원가입이 완료되었습니다.");
-			console.log(response);
-			location.href = "/";
-		}).fail(function(error){
+			if (response.status === 500) {
+				alert("회원가입에 실패하셨습니다.");
+			} else {
+				alert("회원가입이 완료되었습니다.");
+				console.log(response);
+				location.href = "/";
+			}
+		}).fail(function(error) {
 			//회원가입 수행 요청에 대한 응답 -> 실패 인 경우
 			alert(JSON.stringify(error));
 		});
@@ -57,11 +61,11 @@ let index = {
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
-		}).done(function(response){
+		}).done(function(response) {
 			alert("회원수정이 완료되었습니다.");
 			console.log(response);
 			location.href = "/";
-		}).fail(function(error){
+		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
 	},
