@@ -35,7 +35,7 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;	//시퀀스, auto_increment
 	
-	@Column(nullable=false, length=30, unique=true)	//null이 될 수 없고, 최대 길이 30
+	@Column(nullable=false, length=100, unique=true)	//null이 될 수 없고, 최대 길이 30
 	private String username;	//아이디
 	
 	@Column(nullable=false, length=100)	//비번 -> 해쉬 => 비밀번호 암호화 하여 DB에 저장
@@ -49,7 +49,7 @@ public class User {
 	private RoleType role;	//Enum 쓰는 것이 좋다 -> 데이터에 Domain을 만들어 줄 수 있음
 	//ADMIN, USER
 	
-	private String oauth;
+	private String oauth;	//kakao, google .. 어디서 로그인했는지
 	
 	@CreationTimestamp	//시간 자동 입력
 	private Timestamp createDate;	//가입 시간
